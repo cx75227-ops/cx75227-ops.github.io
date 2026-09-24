@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>颜色转换 - 工具箱</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="tool-header"><a class="back" href="../index.html">← 返回</a></div>
+  <div class="tool-wrap">
+    <h1>颜色转换</h1>
+    <input type="text" id="hex" placeholder="HEX，如 #4f8cff">
+    <button onclick="hexToRgb()">HEX → RGB</button>
+    <input type="text" id="rgb" placeholder="RGB，如 79,140,255">
+    <button onclick="rgbToHex()">RGB → HEX</button>
+    <div id="preview" style="height:60px;border-radius:8px;margin-top:12px;border:1px solid #2a2f3a;"></div>
+    <div class="output" id="output"></div>
+  </div>
+  <script>
+    const out = document.getElementById('output');
+    const preview = document.getElementById('preview');
+    function ok(s){out.textContent=s;out.style.color='#9fe8a8';}
+    function err(s){out.textContent=s;out.style.color='#ff7b7b';}
+    function hexToRgb(){
+      let h = document.getElementById('hex').value.trim().replace('#','');
+      if(!/^[0-9a-fA-F]{6}$/.test(h)) return err('无效 HEX');
+      const r=parseInt(h.slice(0,2),16), g=parseInt(h.slice(2,4),16), b=parseInt(h.slice(4,6),16);
+      preview.style.background = '#'+h;
+      ok(`${r}, ${g}, ${b}`);
+    }
+    function rgbToHex(){
+      const parts = document.getElementById('rgb').value.split(',').map(s=>parseInt(s.trim()));
+      if(parts.length!==3 || parts.some(n=>isNaN(n)||n<0||n>255)) return err('无效 RGB');
+      const h = parts.map(n=>n.toString(16).padStart(2,'0')).join('');
+      preview.style.background = '#'+h;
+      ok('#'+h);
+    }
+  </script>
+</body>
+</html>

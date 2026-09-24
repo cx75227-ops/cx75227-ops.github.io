@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正则测试 - 工具箱</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="tool-header"><a class="back" href="../index.html">← 返回</a></div>
+  <div class="tool-wrap">
+    <h1>正则测试</h1>
+    <input type="text" id="pattern" placeholder="正则表达式，如 \d+">
+    <input type="text" id="flags" placeholder="flags，如 g i">
+    <textarea id="text" rows="6" placeholder="待匹配文本"></textarea>
+    <button onclick="test()">测试</button>
+    <div class="output" id="output"></div>
+  </div>
+  <script>
+    const out = document.getElementById('output');
+    function ok(s){out.textContent=s;out.style.color='#9fe8a8';}
+    function err(s){out.textContent=s;out.style.color='#ff7b7b';}
+    function test(){
+      const p = document.getElementById('pattern').value;
+      const f = document.getElementById('flags').value;
+      const t = document.getElementById('text').value;
+      if(!p) return err('请输入正则');
+      try {
+        const re = new RegExp(p, f);
+        const m = t.match(re);
+        if(!m) return ok('无匹配');
+        if(re.global) return ok('匹配 ' + m.length + ' 处：\n' + m.join('\n'));
+        ok('匹配到：\n' + m[0] + '\n\n分组：\n' + m.slice(1).map((g,i)=>`$${i+1}: ${g}`).join('\n'));
+      } catch(e){ err('正则错误：'+e.message); }
+    }
+  </script>
+</body>
+</html>

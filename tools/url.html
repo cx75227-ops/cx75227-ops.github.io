@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL 编解码 - 工具箱</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="tool-header"><a class="back" href="../index.html">← 返回</a></div>
+  <div class="tool-wrap">
+    <h1>URL 编解码</h1>
+    <textarea id="input" rows="6" placeholder="输入文本或 URL"></textarea>
+    <button onclick="encode()">编码</button>
+    <button onclick="decode()">解码</button>
+    <div class="output" id="output"></div>
+  </div>
+  <script>
+    const input = document.getElementById('input');
+    const out = document.getElementById('output');
+    function ok(s){out.textContent=s;out.style.color='#9fe8a8';}
+    function encode(){ ok(encodeURIComponent(input.value)); }
+    function decode(){ ok(decodeURIComponent(input.value)); }
+  </script>
+</body>
+</html>

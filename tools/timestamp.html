@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时间戳转换 - 工具箱</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="tool-header"><a class="back" href="../index.html">← 返回</a></div>
+  <div class="tool-wrap">
+    <h1>时间戳转换</h1>
+    <p style="color:#8b93a3;margin-bottom:12px;">当前时间戳：<span id="now" style="color:#4f8cff"></span></p>
+    <input type="text" id="ts" placeholder="输入时间戳（秒或毫秒）">
+    <button onclick="tsToDate()">时间戳 → 日期</button>
+    <input type="text" id="date" placeholder="输入日期，如 2026-09-24 22:35:32">
+    <button onclick="dateToTs()">日期 → 时间戳</button>
+    <div class="output" id="output"></div>
+  </div>
+  <script>
+    const out = document.getElementById('output');
+    function ok(s){out.textContent=s;out.style.color='#9fe8a8';}
+    function err(s){out.textContent=s;out.style.color='#ff7b7b';}
+    setInterval(() => document.getElementById('now').textContent = Math.floor(Date.now()/1000), 1000);
+    function pad(n){return String(n).padStart(2,'0');}
+    function fmt(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());}
+    function tsToDate(){
+      let v = document.getElementById('ts').value.trim();
+      if(!v) return err('请输入时间戳');
+      let n = Number(v);
+      if(!Number.isFinite(n)) return err('无效时间戳');
+      if(v.length <= 10) n *= 1000;
+      ok(fmt(new Date(n)));
+    }
+    function dateToTs(){
+      let v = document.getElementById('date').value.trim();
+      let d = new Date(v.replace(' ', 'T'));
+      if(isNaN(d)) return err('无效日期');
+      ok(d.getTime()/1000 + '（秒）\n' + d.getTime() + '（毫秒）');
+    }
+  </script>
+</body>
+</html>

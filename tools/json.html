@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 格式化 - 工具箱</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="tool-header"><a class="back" href="../index.html">← 返回</a></div>
+  <div class="tool-wrap">
+    <h1>JSON 格式化</h1>
+    <textarea id="input" rows="8" placeholder='粘贴 JSON，例如 {"a":1}'></textarea>
+    <button onclick="format()">格式化</button>
+    <button onclick="minify()">压缩</button>
+    <button onclick="clearAll()">清空</button>
+    <div class="output" id="output"></div>
+  </div>
+  <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    function show(err) { output.textContent = err; output.style.color = '#ff7b7b'; }
+    function ok(s) { output.textContent = s; output.style.color = '#9fe8a8'; }
+    function format() {
+      try { ok(JSON.stringify(JSON.parse(input.value), null, 2)); }
+      catch (e) { show('JSON 解析失败：' + e.message); }
+    }
+    function minify() {
+      try { ok(JSON.stringify(JSON.parse(input.value))); }
+      catch (e) { show('JSON 解析失败：' + e.message); }
+    }
+    function clearAll() { input.value = ''; output.textContent = ''; }
+  </script>
+</body>
+</html>
