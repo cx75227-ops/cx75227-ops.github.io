@@ -8,45 +8,64 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>工具箱</h1>
-    <p>免费在线小工具，随开随用</p>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="logo">🧰</div>
+      <h1>工具箱</h1>
+      <p>免费在线小工具，随开随用</p>
+      <div class="hero-meta">
+        <span class="badge">6 个工具</span>
+        <span class="badge">免费 · 无广告打扰</span>
+      </div>
+    </div>
   </header>
+
   <main>
     <section class="category">
       <h2>编码 / 转换</h2>
       <div class="grid">
-        <a class="card" href="tools/json.html">
-          <div class="name">JSON 格式化</div>
-          <div class="desc">校验、格式化、压缩 JSON</div>
+        <a class="card" href="tools/json.html" style="--accent:#f7c948">
+          <span class="icon">🧩</span>
+          <span class="name">JSON 格式化</span>
+          <span class="desc">校验、格式化、压缩 JSON</span>
         </a>
-        <a class="card" href="tools/timestamp.html">
-          <div class="name">时间戳转换</div>
-          <div class="desc">时间戳 ↔ 日期时间互转</div>
+        <a class="card" href="tools/timestamp.html" style="--accent:#4f8cff">
+          <span class="icon">⏱️</span>
+          <span class="name">时间戳转换</span>
+          <span class="desc">时间戳 ↔ 日期时间互转</span>
         </a>
-        <a class="card" href="tools/base64.html">
-          <div class="name">Base64 编解码</div>
-          <div class="desc">文本与 Base64 互转</div>
+        <a class="card" href="tools/base64.html" style="--accent:#5fd068">
+          <span class="icon">🔐</span>
+          <span class="name">Base64 编解码</span>
+          <span class="desc">文本与 Base64 互转</span>
         </a>
-        <a class="card" href="tools/url.html">
-          <div class="name">URL 编解码</div>
-          <div class="desc">URL 编码 / 解码</div>
+        <a class="card" href="tools/url.html" style="--accent:#b07cf7">
+          <span class="icon">🔗</span>
+          <span class="name">URL 编解码</span>
+          <span class="desc">URL 编码 / 解码</span>
         </a>
       </div>
     </section>
+
     <section class="category">
       <h2>文本 / 开发</h2>
       <div class="grid">
-        <a class="card" href="tools/regex.html">
-          <div class="name">正则测试</div>
-          <div class="desc">在线测试正则表达式</div>
+        <a class="card" href="tools/regex.html" style="--accent:#f07c5f">
+          <span class="icon">🎯</span>
+          <span class="name">正则测试</span>
+          <span class="desc">在线测试正则表达式</span>
         </a>
-        <a class="card" href="tools/color.html">
-          <div class="name">颜色转换</div>
-          <div class="desc">HEX ↔ RGB 互转</div>
+        <a class="card" href="tools/color.html" style="--accent:#e85fb8">
+          <span class="icon">🎨</span>
+          <span class="name">颜色转换</span>
+          <span class="desc">HEX ↔ RGB 互转</span>
         </a>
       </div>
     </section>
   </main>
+
+  <footer>
+    <p>工具箱 · 免费在线工具集合</p>
+  </footer>
 </body>
 </html>
