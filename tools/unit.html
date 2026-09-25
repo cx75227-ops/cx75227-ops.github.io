@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单位换算 - 工具箱</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="tool-header"><a class="back" href="../index.html">← 返回</a></div>
+  <div class="tool-wrap">
+    <h1>单位换算</h1>
+    <select id="cat" onchange="build()">
+      <option value="len">长度</option>
+      <option value="temp">温度</option>
+      <option value="weight">重量</option>
+    </select>
+    <input id="val" type="number" value="1" oninput="conv()" style="width:160px">
+    <span id="u1"></span>
+    <span> = </span>
+    <span id="u2"></span>
+    <div class="output" id="output"></div>
+  </div>
+  <script>
+    // 换算表：都以「基准单位」为 1 的系数存储
+    const tables = {
+      len:   { 米:1, 千米:1000, 厘米:0.01, 毫米:0.001, 英里:1609.344, 英尺:0.3048, 英寸:0.0254, 码:0.9144 },
+      weight:{ 千克:1, 克:0.001, 毫克:0.000001, 吨:1000, 磅:0.45359237, 盎司:0.028349523 },
+    };
+    function build(){
+      const cat = document.getElementById('cat').value;
+      const keys = Object.keys(tables[cat]);
+      const u1 = document.getElementById('u1');
+      const u2 = document.getElementById('u2');
+      u1.innerHTML = '<select id="s1">' + keys.map(k=>`<option>${k}</option>`).join('') + '</select>';
+      u2.innerHTML = '<select id="s2">' + keys.map((k,i)=>`<option ${i===1?'selected':''}>${k}</option>`).join('') + '</select>';
+      document.getElementById('s1').onchange = conv;
+      document.getElementById('s2').onchange = conv;
+      conv();
+    }
+    function conv(){
+      const cat = document.getElementById('cat').value;
+      const val = parseFloat(document.getElementById('val').value);
+      if(isNaN(val)){ document.getElementById('output').textContent=''; return; }
+      let r;
+      if(cat === 'temp'){
+        const a = document.getElementById('s1').value, b = document.getElementById('s2').value;
+        const toC = { 摄氏:x=>x, 华氏:x=>(x-32)*5/9, 开尔文:x=>x-273.15 };
+        const fromC = { 摄氏:x=>x, 华氏:x=>x*9/5+32, 开尔文:x=>x+273.15 };
+        r = fromC[b](toC[a](val));
+      } else {
+        const f1 = tables[cat][document.getElementById('s1').value];
+        const f2 = tables[cat][document.getElementById('s2').value];
+        r = val * f1 / f2;
+      }
+      document.getElementById('output').textContent = r;
+      document.getElementById('output').style.color = '#9fe8a8';
+    }
+    build();
+  </script>
+</body>
+</html>

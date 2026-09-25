@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>字数统计 - 工具箱</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="tool-header"><a class="back" href="../index.html">← 返回</a></div>
+  <div class="tool-wrap">
+    <h1>字数统计</h1>
+    <textarea id="input" rows="8" placeholder="粘贴或输入文本"></textarea>
+    <div class="output" id="output"></div>
+  </div>
+  <script>
+    const input = document.getElementById('input');
+    const out = document.getElementById('output');
+    function calc(){
+      const t = input.value;
+      if(!t){ out.textContent = ''; return; }
+      const chars = t.length;                       // 字符数
+      const noSpace = t.replace(/\s/g,'').length;   // 去空格
+      const zh = (t.match(/[\u4e00-\u9fa5]/g)||[]).length; // 汉字
+      const words = (t.trim().match(/[A-Za-z0-9]+/g)||[]).length; // 英文单词
+      const lines = t.split('\n').length;           // 行数
+      out.textContent = [
+        '字符数（含空格）：' + chars,
+        '字符数（不含空格）：' + noSpace,
+        '汉字：' + zh,
+        '英文/数字单词：' + words,
+        '行数：' + lines,
+        '字节数（UTF-8）：' + new TextEncoder().encode(t).length
+      ].join('\n');
+      out.style.color = '#9fe8a8';
+    }
+    input.addEventListener('input', calc);
+  </script>
+</body>
+</html>

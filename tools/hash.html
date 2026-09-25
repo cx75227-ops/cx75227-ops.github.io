@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>哈希计算 SHA - 工具箱</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="tool-header"><a class="back" href="../index.html">← 返回</a></div>
+  <div class="tool-wrap">
+    <h1>哈希计算（SHA）</h1>
+    <textarea id="input" rows="6" placeholder="输入文本，实时计算哈希"></textarea>
+    <div class="output" id="output">SHA-256 结果将显示在这里</div>
+  </div>
+  <script>
+    const input = document.getElementById('input');
+    const out = document.getElementById('output');
+    async function calc(){
+      const txt = input.value;
+      if(!txt){ out.textContent = '输入文本后显示结果'; return; }
+      const data = new TextEncoder().encode(txt);
+      const rows = [];
+      for(const algo of ['SHA-1','SHA-256','SHA-512']){
+        const buf = await crypto.subtle.digest(algo, data);
+        const hex = [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+        rows.push(algo + '：' + hex);
+      }
+      out.textContent = rows.join('\n\n');
+      out.style.color = '#9fe8a8';
+    }
+    input.addEventListener('input', calc);
+  </script>
+</body>
+</html>

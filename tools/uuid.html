@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UUID 生成器 - 工具箱</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="tool-header"><a class="back" href="../index.html">← 返回</a></div>
+  <div class="tool-wrap">
+    <h1>UUID 生成器</h1>
+    <button onclick="gen()">生成一个</button>
+    <button onclick="genMany()">生成 10 个</button>
+    <button onclick="copyAll()">复制</button>
+    <div class="output" id="output"></div>
+  </div>
+  <script>
+    const out = document.getElementById('output');
+    function one(){ return crypto.randomUUID(); }
+    function gen(){
+      out.textContent = one();
+      out.style.color = '#9fe8a8';
+    }
+    function genMany(){
+      out.textContent = Array.from({length:10}, one).join('\n');
+      out.style.color = '#9fe8a8';
+    }
+    function copyAll(){
+      const t = out.textContent;
+      if(!t) return;
+      navigator.clipboard.writeText(t);
+    }
+    gen();
+  </script>
+</body>
+</html>
