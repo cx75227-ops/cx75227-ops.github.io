@@ -16,16 +16,23 @@
   .card {
     width: 100%; max-width: 520px; background: #181b21;
     border: 1px solid #262b33; border-radius: 16px; padding: 32px 28px;
+    text-align: center;
   }
-  h1 { font-size: 20px; margin-bottom: 8px; }
+  h1 { font-size: 20px; margin-bottom: 12px; }
   .hint { color: #8b93a1; font-size: 14px; line-height: 1.6; margin-bottom: 20px; word-break: break-all; }
   a { color: #4da3ff; text-decoration: none; }
   a:hover { text-decoration: underline; }
+  .btn {
+    display: inline-block; background: #2f6fed; color: #fff;
+    border: none; border-radius: 10px; padding: 14px 32px;
+    font-size: 16px; cursor: pointer; text-decoration: none;
+  }
+  .btn:hover { background: #3b7bff; }
   ul { list-style: none; }
   li {
     display: flex; justify-content: space-between; align-items: center; gap: 12px;
     padding: 12px 14px; border: 1px solid #262b33; border-radius: 10px; margin-bottom: 10px;
-    background: #12151a;
+    background: #12151a; text-align: left;
   }
   .code { font-family: ui-monospace, monospace; color: #4da3ff; font-size: 14px; }
   .url { color: #8b93a1; font-size: 13px; word-break: break-all; text-align: right; }
@@ -54,12 +61,11 @@
   var target = code ? links[code] : '';
 
   if (target) {
-    // 匹配到短码：立即跳转
+    // 匹配到短码：显示按钮，点击后跳转
     box.innerHTML =
-      '<h1>正在跳转…</h1>' +
+      '<h1>准备跳转</h1>' +
       '<p class="hint">目标：' + target + '</p>' +
-      '<p class="hint">如未自动跳转，请<a href="' + target + '">点击这里</a>。</p>';
-    location.replace(target);
+      '<a class="btn" href="' + target + '">点击跳转</a>';
   } else if (code) {
     // 短码不存在
     box.innerHTML =
