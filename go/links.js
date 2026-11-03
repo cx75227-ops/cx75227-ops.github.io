@@ -7,6 +7,9 @@
 // ============================================
 
 window.JUMP_LINKS = {
+  // 你的广告落地页
+  "sts": "https://sts6326.com/",
+
   // 下面是两个示例，可直接删掉换成你自己的：
   "demo": "https://www.baidu.com",
   "github": "https://github.com/cx75227-ops",
