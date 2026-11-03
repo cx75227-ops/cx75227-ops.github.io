@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>跳转中…</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: #0f1115; color: #e6e8eb; padding: 24px;
+  }
+  .card {
+    width: 100%; max-width: 520px; background: #181b21;
+    border: 1px solid #262b33; border-radius: 16px; padding: 32px 28px;
+  }
+  h1 { font-size: 20px; margin-bottom: 8px; }
+  .hint { color: #8b93a1; font-size: 14px; line-height: 1.6; margin-bottom: 20px; word-break: break-all; }
+  a { color: #4da3ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  ul { list-style: none; }
+  li {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    padding: 12px 14px; border: 1px solid #262b33; border-radius: 10px; margin-bottom: 10px;
+    background: #12151a;
+  }
+  .code { font-family: ui-monospace, monospace; color: #4da3ff; font-size: 14px; }
+  .url { color: #8b93a1; font-size: 13px; word-break: break-all; text-align: right; }
+  .empty { color: #8b93a1; text-align: center; padding: 24px 0; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="card" id="box"></div>
+
+<script src="links.js"></script>
+<script>
+(function () {
+  var links = window.JUMP_LINKS || {};
+  var box = document.getElementById('box');
+
+  // 解析短码：?s=xxx 或 ?u=xxx 或 #xxx
+  function getCode() {
+    var p = new URLSearchParams(location.search);
+    if (p.get('s')) return p.get('s');
+    if (p.get('u')) return p.get('u');
+    var h = location.hash.replace('#', '').replace(/^\/+/, '');
+    return h;
+  }
+
+  var code = getCode();
+  var target = code ? links[code] : '';
+
+  if (target) {
+    // 匹配到短码：立即跳转
+    box.innerHTML =
+      '<h1>正在跳转…</h1>' +
+      '<p class="hint">目标：' + target + '</p>' +
+      '<p class="hint">如未自动跳转，请<a href="' + target + '">点击这里</a>。</p>';
+    location.replace(target);
+  } else if (code) {
+    // 短码不存在
+    box.innerHTML =
+      '<h1>链接不存在</h1>' +
+      '<p class="hint">短码「' + code + '」没有对应的跳转地址。</p>' +
+      '<p class="hint"><a href="' + location.pathname + '">查看全部链接</a></p>';
+  } else {
+    // 无短码：显示链接列表
+    var keys = Object.keys(links);
+    var html = '<h1>跳转链接列表</h1><p class="hint">访问 <a href="' + location.pathname + '?s=短码">' +
+      location.origin + location.pathname + '?s=短码</a> 即可跳转。</p>';
+    if (keys.length === 0) {
+      html += '<div class="empty">还没有配置任何链接</div>';
+    } else {
+      html += '<ul>';
+      keys.forEach(function (k) {
+        html += '<li><span class="code">' + k + '</span>' +
+          '<span class="url">' + links[k] + '</span></li>';
+      });
+      html += '</ul>';
+    }
+    box.innerHTML = html;
+  }
+})();
+</script>
+</body>
+</html>
